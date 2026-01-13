@@ -132,12 +132,13 @@
                 </table>
             </div>
 
-            <!-- Print-Only Table (Exact Match to PDF) -->
+            <!-- Print-Only Table (Exact Match to PDF + Foto) -->
             <div class="d-none d-print-block">
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Times New Roman', Times, serif; font-size: 12px; color: black;">
                     <thead>
                         <tr>
                             <th style="border: 1px solid #000; padding: 6px 8px; background-color: #f0f0f0; text-align: center; font-weight: bold; width: 5%; color: black;">No</th>
+                            <th style="border: 1px solid #000; padding: 6px 8px; background-color: #f0f0f0; text-align: center; font-weight: bold; width: 10%; color: black;">Foto</th>
                             <th style="border: 1px solid #000; padding: 6px 8px; background-color: #f0f0f0; text-align: center; font-weight: bold; color: black;">Nama Mahasiswa</th>
                             <th style="border: 1px solid #000; padding: 6px 8px; background-color: #f0f0f0; text-align: center; font-weight: bold; width: 20%; color: black;">NIM</th>
                             <th style="border: 1px solid #000; padding: 6px 8px; background-color: #f0f0f0; text-align: center; font-weight: bold; width: 20%; color: black;">Prodi</th>
@@ -149,6 +150,13 @@
                         @foreach($rankings as $index => $rank)
                             <tr>
                                 <td style="border: 1px solid #000; padding: 6px 8px; text-align: center; color: black;">{{ $index + 1 }}</td>
+                                <td style="border: 1px solid #000; padding: 6px 8px; text-align: center;">
+                                    @if($rank['mahasiswa']->foto)
+                                        <img src="{{ asset('storage/fotos/' . $rank['mahasiswa']->foto) }}" alt="Foto" style="width: 40px; height: 50px; object-fit: cover; border: 1px solid #ddd;">
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td style="border: 1px solid #000; padding: 6px 8px; color: black;">{{ $rank['mahasiswa']->nama }}</td>
                                 <td style="border: 1px solid #000; padding: 6px 8px; text-align: center; color: black;">{{ $rank['mahasiswa']->nim }}</td>
                                 <td style="border: 1px solid #000; padding: 6px 8px; color: black;">{{ $rank['mahasiswa']->prodi }}</td>

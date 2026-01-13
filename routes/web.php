@@ -53,5 +53,8 @@ Route::prefix('admin')->group(function () {
         // Mahasiswa
         Route::get('/mahasiswa/export-pdf', [App\Http\Controllers\Admin\MahasiswaController::class, 'exportPdf'])->name('admin.mahasiswa.exportPdf');
         Route::get('/mahasiswa', [App\Http\Controllers\Admin\MahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
+        Route::get('/mahasiswa/{id}/edit', [App\Http\Controllers\Admin\MahasiswaController::class, 'edit'])->name('admin.mahasiswa.edit');
+        Route::put('/mahasiswa/{id}', [App\Http\Controllers\Admin\MahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
+        Route::delete('/mahasiswa/{id}', [App\Http\Controllers\Admin\MahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
     });
 });

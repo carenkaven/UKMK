@@ -64,6 +64,7 @@
         <thead>
             <tr>
                 <th style="width: 5%;">No</th>
+                <th style="width: 10%;">Foto</th>
                 <th>Nama Mahasiswa</th>
                 <th style="width: 20%;">NIM</th>
                 <th style="width: 20%;">Prodi</th>
@@ -75,6 +76,26 @@
             @foreach($rankings as $index => $rank)
                 <tr>
                     <td style="text-align: center;">{{ $index + 1 }}</td>
+                    <td style="text-align: center;">
+                        @php
+                            $fotoBase64 = '';
+                            if ($rank['mahasiswa']->foto) {
+                                $fotoPath = storage_path('app/public/fotos/' . $rank['mahasiswa']->foto);
+                                if (file_exists($fotoPath)) {
+                                    try {
+                                        $fType = pathinfo($fotoPath, PATHINFO_EXTENSION);
+                                        $fData = file_get_contents($fotoPath);
+                                        $fotoBase64 = 'data:image/' . $fType . ';base64,' . base64_encode($fData);
+                                    } catch (\Exception $e) { $fotoBase64 = ''; }
+                                }
+                            }
+                        @endphp
+                        @if($fotoBase64)
+                            <img src="{{ $fotoBase64 }}" alt="Foto" style="width: 30px; height: 40px; object-fit: cover;">
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>{{ $rank['mahasiswa']->nama }}</td>
                     <td style="text-align: center;">{{ $rank['mahasiswa']->nim }}</td>
                     <td>{{ $rank['mahasiswa']->prodi }}</td>
