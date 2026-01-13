@@ -1,0 +1,904 @@
+/* Admin Dashboard Variables */
+:root {
+    --primary-color: #0d2c6c;
+    --secondary-color: #004aad;
+    --accent-color: #ffc107;
+    --text-color: #333;
+    --bg-color: #f4f7f6;
+    --white: #ffffff;
+    --danger: #dc3545;
+    --success: #198754;
+    --warning: #ffc107;
+    --border-color: #ddd;
+    --sidebar-width: 260px;
+    --sidebar-bg: #0d2c6c;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+/* Layout Structure */
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    width: 100%;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    color: #fff;
+    flex-shrink: 0;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    padding: 20px;
+    z-index: 100;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sidebar-menu a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.sidebar-menu button.logout-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    color: rgba(255, 204, 204, 0.8); /* Soft red for logout */
+    padding: 10px 14px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.sidebar-menu button.logout-btn:hover {
+    background: rgba(220, 53, 69, 0.15); /* Danger hover background */
+    color: #ffcccc;
+    transform: translateX(4px);
+}
+
+.sidebar-menu a:hover, 
+.sidebar-menu a.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transform: translateX(5px);
+}
+
+.sidebar-menu .icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.menu-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    margin: 20px 0 10px 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - var(--sidebar-width)); /* Ensure proper calculation */
+    background: var(--bg-color);
+    min-height: 100vh;
+}
+
+.topbar {
+    background: var(--white);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    height: 70px;
+}
+
+.topbar h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.user-info {
+    font-size: 0.95rem;
+    color: #555;
+    background: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #edf2f7;
+}
+
+.content {
+    padding: 30px;
+    flex-grow: 1;
+    overflow-x: hidden;
+}
+
+/* Components */
+/* Components */
+.card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 16px; /* Softer radius */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); /* Modern, soft shadow */
+    margin-bottom: 25px;
+    border: 1px solid rgba(0,0,0,0.02); /* Very subtle border */
+}
+
+.card h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px; /* More breathing room */
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Tables */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #edf2f7; /* Clean border color */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+}
+
+table.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+}
+
+table.admin-table th,
+table.admin-table td {
+    padding: 16px 20px; /* More comfortable spacing */
+    text-align: left;
+    border-bottom: 1px solid #edf2f7;
+    vertical-align: middle;
+}
+
+table.admin-table th {
+    background-color: #f8fafc; /* Lighter, cooler gray */
+    color: #64748b; /* Slate color text */
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem; /* Smaller, punchier headers */
+    letter-spacing: 0.05em;
+}
+
+table.admin-table tr:hover {
+    background-color: #f8fafc; /* Subtle hover state */
+}
+
+table.admin-table tr:last-child td {
+    border-bottom: none; /* remove bottom border from last row */
+}
+
+
+
+/* Forms */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1);
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--danger); }
+.text-success { color: var(--success); }
+
+/* Badges */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap; /* Prevent text wrapping */
+    display: inline-block;
+}
+
+.badge-pending { background: #fff3cd; color: #856404; }
+.badge-success { background: #d4edda; color: #155724; }
+.badge-danger { background: #f8d7da; color: #721c24; }
+
+/* Dashboard Stats */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); /* Tailwind-ish shadow */
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid rgba(0,0,0,0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 120px; 
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-info p {
+    margin: 0 0 5px 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.stat-info h3 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Color variants for cards */
+.stat-card.blue .stat-icon { background: #e0f2fe; color: #0284c7; }
+.stat-card.yellow .stat-icon { background: #fef9c3; color: #ca8a04; }
+.stat-card.green .stat-icon { background: #dcfce7; color: #16a34a; }
+.stat-card.teal .stat-icon { background: #ccfbf1; color: #0d9488; }
+
+/* Dashboard Content Grid */
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    align-items: stretch; /* Stretch to match heights if content allows */
+}
+
+.chart-card, .recent-card {
+    background: var(--white);
+    border-radius: 16px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%; /* Fill the grid cell */
+    min-height: 450px; /* Ensure substantial height */
+}
+
+.card-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.chart-container {
+    padding: 20px;
+    height: 400px; /* Explicit height for stability */
+    width: 100%;
+    position: relative;
+}
+
+canvas#ukmChart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Recent Activity List */
+.recent-card .activity-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s;
+}
+
+.activity-item:hover {
+    background-color: #f8fafc;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: #e2e8f0;
+    color: #475569;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.details {
+    flex: 1;
+    min-width: 0; /* Text truncation fix */
+}
+
+.details strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #334155;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.details span {
+    font-size: 0.85rem;
+    color: #64748b;
+    display: block;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.view-more {
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid #f1f5f9;
+    background: #f8fafc;
+}
+
+.view-more a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.view-more a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Mobile Responsiveness for Grid */
+@media (max-width: 1024px) {
+    .dashboard-content {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    .chart-card, .recent-card {
+        min-height: auto;
+        height: auto;
+    }
+    .chart-container {
+        height: 300px;
+    }
+}
+
+/* Mobile Responsiveness General */
+@media (max-width: 768px) {
+    /* 1. Sidebar & Layout */
+    .sidebar {
+        position: fixed;
+        height: 100vh;
+        left: 0;
+        top: 0;
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        width: 240px; /* Slightly narrower on mobile */
+    }
+
+    .admin-container.sidebar-active .sidebar {
+        transform: translateX(0);
+    }
+    
+    /* Overlay effect when sidebar is active */
+    .admin-container.sidebar-active::after {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 99;
+        backdrop-filter: blur(2px);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .toggle-sidebar {
+        display: block;
+        margin-right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 5px;
+        color: var(--primary-color);
+    }
+
+    /* 2. Spacing & Typography */
+    .content {
+        padding: 15px; /* Reduce padding on mobile */
+    }
+
+    .topbar {
+        padding: 10px 20px;
+        height: 60px;
+    }
+
+    .topbar h3 {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    .user-info span {
+        display: none; /* Hide name on small screens */
+    }
+
+    .dashboard-header h2 {
+        font-size: 1.35rem;
+    }
+    
+    .card {
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* 3. Header Flex (Filters & Buttons) */
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .header-flex > div, 
+    .header-flex form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-flex .btn {
+        width: 100%;
+        text-align: center;
+        margin-right: 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* 4. Tables - Horizontal Scroll */
+    .table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #edf2f7;
+    }
+    
+    table.admin-table {
+        min-width: 650px; /* Ensure table keeps structure */
+        margin-bottom: 0;
+    }
+    
+    table.admin-table th, 
+    table.admin-table td {
+        white-space: nowrap; /* Prevent awkward wrapping */
+        padding: 10px 12px;
+        font-size: 0.85rem; /* Smaller font for density */
+    }
+
+    /* 5. Forms */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-control {
+        font-size: 16px; /* Prevent iOS zoom on focus */
+        padding: 10px;
+    }
+
+    /* 6. Dropdown Mobile */
+    .dropdown {
+        width: 100%; /* Full width on mobile contexts usage */
+    }
+
+    .dropdown-content {
+        position: static; /* Stack naturally on mobile */
+        width: 100%;
+        box-shadow: none;
+        border: 1px solid #f1f5f9;
+        margin-top: 5px;
+    }
+}
+
+@media (min-width: 769px) {
+    .toggle-sidebar {
+        display: none;
+    }
+    .dropdown { width: auto; }
+}
+
+/* Print Styles */
+@media print {
+    /* Hide Navigation, Buttons, and UI elements */
+    .sidebar, .topbar, .btn, .header-flex a, .no-print, button, a[href*="edit"], a[href*="create"], a[href*="destroy"] {
+        display: none !important;
+    }
+
+    /* Reset Layout for Print */
+    .main-content {
+        margin-left: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .table-responsive {
+        overflow: visible;
+    }
+
+    /* Table Styling for Print */
+    table.admin-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+        margin-top: 20px;
+    }
+    
+    table.admin-table th, table.admin-table td {
+        border: 1px solid #000;
+        padding: 5px;
+        color: #000;
+    }
+}
+
+/* 🔹 Dropdown Button CSS */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.dropdown-content a, .dropdown-content button {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.dropdown-content a:hover, .dropdown-content button:hover {
+    background-color: #f1f5f9;
+    color: var(--secondary-color);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .btn-secondary {
+    background-color: #5a6268;
+}
+
+@media print {
+    table.admin-table th, table.admin-table td {
+        border: 1px solid #000;
+        padding: 8px;
+        color: #000;
+        vertical-align: top;
+    }
+
+    table.admin-table th {
+        background-color: #f0f0f0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Hide "Aksi" Column (usually the last column) */
+    table.admin-table:not(.ranking-table) th:last-child,
+    table.admin-table:not(.ranking-table) td:last-child {
+        display: none;
+    }
+
+    /* Hide original page titles during print to avoid duplicates with Kop Surat */
+    .card > h3, .header-flex > h3 {
+        display: none;
+    }
+
+    /* Show Print Header */
+    .print-header {
+        display: block !important;
+        text-align: center;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #000;
+        line-height: 1.2;
+    }
+    
+    .print-header h2 { margin: 0; font-size: 16pt; text-transform: uppercase; }
+    .print-header p { margin: 2px 0; font-size: 10pt; }
+    .print-header hr { border: 0.5px solid #000; margin: 5px 0; }
+    .print-header h3 { margin: 5px 0 0; font-size: 12pt; text-transform: uppercase; text-align: center; }
+
+    body {
+        background-color: #fff;
+        color: #000 !important;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    /* Force all text to be black and not italic (lurus) */
+    * {
+        color: #000 !important;
+        font-style: normal !important;
+        text-decoration: none !important;
+    }
+
+    /* Print Badges as Text */
+    .badge {
+        border: none;
+        padding: 0;
+        background: none !important;
+        color: #000 !important;
+        font-weight: normal;
+        font-style: normal !important;
+    }
+
+    /* Clean up nested lists in print */
+    ul {
+        padding-left: 15px !important;
+        margin: 0 !important;
+    }
+
+    li {
+        list-style-type: square;
+    }
+}
+
+.print-header {
+    display: none;
+}
+
+/* Assessment List Styling */
+.assessment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.assessment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 6px;
+}
+
+.assessment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.criteria-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.criteria-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.score-badge {
+    background: #eef2ff;
+    color: var(--secondary-color);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    min-width: 30px;
+    text-align: center;
+}
