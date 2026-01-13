@@ -43,7 +43,7 @@ class StatusController extends Controller
                 'nama' => $mahasiswa->nama,
                 'nim' => $mahasiswa->nim,
                 'ukm' => $pendaftaran->ukm ? $pendaftaran->ukm->nama_ukm : null,
-                'status_verifikasi' => $pendaftaran->status_verifikasi, // Pending, Diterima, Ditolak
+                'status_verifikasi' => $pendaftaran->status_verifikasi, // Pending, Diterima, Dikeluarkan
                 'tanggal_daftar' => $pendaftaran->tanggal_daftar,
             ]
         ]);

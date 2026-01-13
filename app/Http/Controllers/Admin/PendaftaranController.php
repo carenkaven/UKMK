@@ -27,7 +27,7 @@ class PendaftaranController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status_verifikasi' => 'required|in:Pending,Diterima,Ditolak',
+            'status_verifikasi' => 'required|in:Pending,Diterima,Dikeluarkan',
         ]);
 
         $pendaftaran = Pendaftaran::with('mahasiswa', 'ukm')->findOrFail($id);
@@ -56,7 +56,7 @@ class PendaftaranController extends Controller
 
                 // Gunakan Fonnte (Gratis & Populer)
                 $response = Http::withoutVerifying()->withHeaders([
-                    'Authorization' => '9FzpPg9hQCyNknXpKcHR', // Token Fonnte
+                    'Authorization' => 'sir57H8KxGzGUufUXCoN', // Token Fonnte
                 ])->post('https://api.fonnte.com/send', [
                             'target' => $target,
                             'message' => $pesan,
@@ -65,8 +65,8 @@ class PendaftaranController extends Controller
                 // Jangan error kalau WA gagal, lanjut aja
             }
         }
-        // 🔴 Kirim Notifikasi WA jika DIKELUARKAN (Ditolak)
-        elseif ($request->status_verifikasi == 'Ditolak') {
+        // 🔴 Kirim Notifikasi WA jika DIKELUARKAN
+        elseif ($request->status_verifikasi == 'Dikeluarkan') {
             try {
                 $target = $pendaftaran->mahasiswa->telepon;
                 $nama = $pendaftaran->mahasiswa->nama;
@@ -80,7 +80,7 @@ class PendaftaranController extends Controller
                     "*Admin UKMK ITN Malang*";
 
                 Http::withoutVerifying()->withHeaders([
-                    'Authorization' => '9FzpPg9hQCyNknXpKcHR',
+                    'Authorization' => 'sir57H8KxGzGUufUXCoN',
                 ])->post('https://api.fonnte.com/send', [
                             'target' => $target,
                             'message' => $pesan,

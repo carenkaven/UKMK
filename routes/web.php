@@ -23,6 +23,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
+
+
         // Pendaftaran
         Route::get('/pendaftaran/export-pdf', [App\Http\Controllers\Admin\PendaftaranController::class, 'exportPdf'])->name('admin.pendaftaran.exportPdf');
         Route::get('/pendaftaran', [App\Http\Controllers\Admin\PendaftaranController::class, 'index'])->name('admin.pendaftaran.index');

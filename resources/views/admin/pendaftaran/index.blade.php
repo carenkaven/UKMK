@@ -60,14 +60,14 @@
                                     <form action="{{ route('admin.pendaftaran.update', $data->id_pendaftaran) }}" method="POST">
                                         @csrf
                                         <select name="status_verifikasi" onchange="this.form.submit()"
-                                            class="form-select form-select-sm border-0 fw-bold shadow-sm {{ $data->status_verifikasi == 'Diterima' ? 'bg-success text-white' : ($data->status_verifikasi == 'Ditolak' ? 'bg-danger text-white' : 'bg-warning text-dark') }}"
+                                            class="form-select form-select-sm border-0 fw-bold shadow-sm {{ $data->status_verifikasi == 'Diterima' ? 'bg-success text-white' : ($data->status_verifikasi == 'Dikeluarkan' ? 'bg-danger text-white' : 'bg-warning text-dark') }}"
                                             style="width: 130px; cursor: pointer;">
                                             <option value="Pending" {{ $data->status_verifikasi == 'Pending' ? 'selected' : '' }}>
                                                 Pending</option>
                                             <option value="Diterima" {{ $data->status_verifikasi == 'Diterima' ? 'selected' : '' }}>
                                                 Diterima</option>
-                                            <option value="Ditolak" {{ $data->status_verifikasi == 'Ditolak' ? 'selected' : '' }}>
-                                                Ditolak</option>
+                                            <option value="Dikeluarkan" {{ $data->status_verifikasi == 'Dikeluarkan' ? 'selected' : '' }}>
+                                                Dikeluarkan</option>
                                         </select>
                                     </form>
                                 </td>
