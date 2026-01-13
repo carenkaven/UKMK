@@ -5,73 +5,109 @@
     <title>Laporan Data UKM</title>
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 12px;
+            color: #333;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .header h2 {
+            font-size: 20px;
             margin: 0;
             color: #004aad;
             text-transform: uppercase;
+            font-weight: 800;
         }
 
         .header p {
-            margin: 5px 0;
             font-size: 14px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .line {
+            border-bottom: 2px solid #004aad;
+            margin-top: 15px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         th,
         td {
-            border: 1px solid #333;
-            padding: 8px;
-            font-size: 12px;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
             text-align: left;
+            vertical-align: top;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #004aad;
+            color: white;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: bold;
+            border-color: #003380;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: right;
+            font-size: 10px;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
         }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <h2>Laporan Data UKM</h2>
-        <p>Institut Teknologi Nasional Malang</p>
+        <h2>INSTITUT TEKNOLOGI NASIONAL MALANG</h2>
+        <p>Jalan Bendungan Sigura-gura No. 2 Malang, Jawa Timur</p>
+        <p class="small">Laporan Data Unit Kegiatan Mahasiswa (UKM)</p>
+        <div class="line"></div>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama UKM</th>
-                <th>Ketua</th>
-                <th>Deskripsi</th>
-                <th>Kontak</th>
+                <th style="width: 5%; text-align: center;">No</th>
+                <th style="width: 20%;">Nama UKM</th>
+                <th style="width: 20%;">Ketua</th>
+                <th style="width: 35%;">Deskripsi</th>
+                <th style="width: 20%;">Kontak</th>
             </tr>
         </thead>
         <tbody>
             @foreach($ukms as $index => $ukm)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $ukm->nama_ukm }}</td>
+                    <td style="text-align: center;">{{ $index + 1 }}</td>
+                    <td style="font-weight: bold;">{{ $ukm->nama_ukm }}</td>
                     <td>{{ $ukm->ketua_ukm }}</td>
-                    <td>{{ Str::limit($ukm->deskripsi, 100) }}</td>
+                    <td style="text-align: justify;">{{ Str::limit($ukm->deskripsi, 150) }}</td>
                     <td>{{ $ukm->kontak }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    <div class="footer">
+        Dicetak pada: {{ date('d-m-Y H:i') }}
+    </div>
 </body>
 
 </html>

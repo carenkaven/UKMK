@@ -1,36 +1,60 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="card">
-        <h3>Tambah Admin Baru</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white py-3 border-bottom-0">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0 fw-bold">Tambah Admin Baru</h5>
+                        <a href="{{ route('admin.admins.index') }}" class="btn btn-light btn-sm rounded-pill px-3">
+                            <i class="bi bi-arrow-left me-1"></i> Kembali
+                        </a>
+                    </div>
+                </div>
 
-        @if ($errors->any())
-            <div class="alert alert-danger"
-                style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-                <ul style="margin: 0; padding-left: 20px;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+                <div class="card-body p-4">
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul class="mb-0 ps-3">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
-        <form action="{{ route('admin.admins.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label class="form-label">Nama Lengkap</label>
-                <input type="text" name="nama_admin" class="form-control" required>
+                    <form action="{{ route('admin.admins.store') }}" method="POST">
+                        @csrf
+                        <div class="vstack gap-3">
+                            <div class="form-floating">
+                                <input type="text" name="nama_admin" class="form-control" id="nama_admin"
+                                    placeholder="Nama Lengkap" required>
+                                <label for="nama_admin">Nama Lengkap</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="text" name="username" class="form-control" id="username" placeholder="Username"
+                                    required>
+                                <label for="username">Username</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="password" name="password" class="form-control" id="password"
+                                    placeholder="Password" required>
+                                <label for="password">Password</label>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary rounded-pill fw-medium py-2">
+                                    <i class="bi bi-save me-1"></i> Simpan Admin
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary" style="margin-left: 10px;">Batal</a>
-        </form>
+        </div>
     </div>
 @endsection

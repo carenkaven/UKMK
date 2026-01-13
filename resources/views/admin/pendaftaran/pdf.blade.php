@@ -5,105 +5,145 @@
     <title>Laporan Data Pendaftaran</title>
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 12px;
+            color: #333;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .header h2 {
+            font-size: 20px;
             margin: 0;
             color: #004aad;
             text-transform: uppercase;
+            font-weight: 800;
         }
 
         .header p {
-            margin: 5px 0;
             font-size: 14px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .line {
+            border-bottom: 2px solid #004aad;
+            margin-top: 15px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         th,
         td {
-            border: 1px solid #333;
-            padding: 8px;
-            font-size: 12px;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
             text-align: left;
+            vertical-align: middle;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #004aad;
+            color: white;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: bold;
+            border-color: #003380;
         }
 
-        .badge {
-            padding: 3px 8px;
-            border-radius: 4px;
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 10px;
             font-weight: bold;
+            display: inline-block;
         }
 
-        .badge-pending {
-            background-color: #ffeeba;
+        .status-pending {
+            background-color: #fff3cd;
             color: #856404;
+            border: 1px solid #ffeeba;
         }
 
-        .badge-verified {
-            background-color: #d4edda;
-            color: #155724;
+        .status-diterima {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
         }
 
-        .badge-rejected {
+        .status-ditolak {
             background-color: #f8d7da;
-            color: #721c24;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: right;
+            font-size: 10px;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
         }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <h2>Laporan Data Pendaftaran UKM</h2>
-        <p>Institut Teknologi Nasional Malang</p>
+        <h2>INSTITUT TEKNOLOGI NASIONAL MALANG</h2>
+        <p>Jalan Bendungan Sigura-gura No. 2 Malang, Jawa Timur</p>
+        <p class="small">Laporan Data Pendaftaran Anggota UKM</p>
+        <div class="line"></div>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama Mahasiswa</th>
-                <th>NIM</th>
-                <th>Pilihan UKM</th>
-                <th>Tanggal Daftar</th>
-                <th>Status</th>
+                <th style="width: 5%; text-align: center;">No</th>
+                <th style="width: 25%;">Nama Mahasiswa</th>
+                <th style="width: 15%;">NIM</th>
+                <th style="width: 25%;">Pilihan UKM</th>
+                <th style="width: 15%;">Tanggal Daftar</th>
+                <th style="width: 15%; text-align: center;">Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach($pendaftarans as $index => $data)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $data->mahasiswa->nama ?? '-' }}</td>
+                    <td style="text-align: center;">{{ $index + 1 }}</td>
+                    <td style="font-weight: bold;">{{ $data->mahasiswa->nama ?? '-' }}</td>
                     <td>{{ $data->mahasiswa->nim ?? '-' }}</td>
                     <td>{{ $data->ukm->nama_ukm ?? '-' }}</td>
-                    <td>{{ $data->created_at->format('d-m-Y') }}</td>
-                    <td>
+                    <td>{{ $data->created_at->format('d/m/Y') }}</td>
+                    <td style="text-align: center;">
                         @if($data->status_verifikasi == 'Pending')
-                            <span class="badge badge-pending">Pending</span>
+                            <span class="status-badge status-pending">PENDING</span>
                         @elseif($data->status_verifikasi == 'Diterima')
-                            <span class="badge badge-verified">Diterima</span>
+                            <span class="status-badge status-diterima">DITERIMA</span>
                         @else
-                            <span class="badge badge-rejected">{{ $data->status_verifikasi }}</span>
+                            <span class="status-badge status-ditolak">{{ strtoupper($data->status_verifikasi) }}</span>
                         @endif
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    <div class="footer">
+        Dicetak pada: {{ date('d-m-Y H:i') }}
+    </div>
 </body>
 
 </html>
